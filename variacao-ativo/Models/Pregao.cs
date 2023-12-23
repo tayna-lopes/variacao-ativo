@@ -7,12 +7,15 @@ namespace variacao_ativo.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public int Dia { get; set; }
+        public ObjectId Id { get; set; }
 
         [BsonElement("Data")]
-        public DateTime Data { get; set; }
+        public long Data { get; set; }
 
         [BsonElement("Valor")]
-        public double Valor { get; set; }
+        public double? Valor { get; set; }
+
+        [BsonElement("Ativo")]
+        public string Ativo { get; set; }
     }
 }

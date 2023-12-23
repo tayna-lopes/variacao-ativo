@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using variacao_ativo.Models;
 using variacao_ativo.Services.Interface;
+using variacao_ativo.Views;
 
 namespace variacao_ativo.Controllers;
 
@@ -16,13 +17,11 @@ public class VariacaoAtivoController : ControllerBase
         _logger = logger;
         _financeApiService = financeApiService;
     }
-    /// <summary>
-    /// Lista os itens da To-do list.
-    /// </summary>
-    [HttpGet]
-    [Route("ObterChart")]
 
-    public async Task<ActionResult<string>> ObterChart(string NomeAtivo)
+    [HttpGet]
+    [Route("ObterVariacaoAtivos")]
+
+    public async Task<ActionResult<List<VariacaoDoAtivoViewModel>>> ObterChart(string NomeAtivo)
     {
         try
         {
@@ -30,7 +29,7 @@ public class VariacaoAtivoController : ControllerBase
             {
                 return BadRequest();
             }
-            return await _financeApiService.ObterChart(NomeAtivo);
+            return await _financeApiService.ObterVariacaoAtivos(NomeAtivo);
 
         }catch (Exception ex)
         {

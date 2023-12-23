@@ -1,4 +1,5 @@
 ﻿using System;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace variacao_ativo.Models.Context
@@ -29,12 +30,47 @@ namespace variacao_ativo.Models.Context
             }
         }
 
-        public IMongoCollection<Pregao> PregaoCollection
+        public void AdicionaOuSubstitui(Pregao pregao)
         {
-            get
+            var collection = _database.GetCollection<Pregao>("PregaoCollection");
+
+            var filter = Builders<Pregao>.Filter.And(
+            Builders<Pregao>.Filter.Eq(x => x.Data, pregao.Data),
+            Builders<Pregao>.Filter.Eq(x => x.Ativo, pregao.Ativo));
+
+            var options = new FindOneAndReplaceOptions<BsonDocument>
             {
-                return _database.GetCollection<Pregao>("PregaoCollection");
+                ReturnDocument = ReturnDocument.Before
+            };
+
+            var encontrado = collection.Find(filter);
+            if (encontrado == null)
+            {
+                collection.InsertOne(pregao);
             }
+            else
+            {
+                collection.DeleteOne(filter);
+                collection.InsertOne(pregao);
+            }
+        }
+        public void AdicionaOuSubstituiVarios(List<Pregao> pregaoList)
+        {
+            pregaoList.ForEach(x =>
+            {
+                AdicionaOuSubstitui(x);
+            } );
+        }
+
+        public List<Pregao> BuscarUltimos30(string NomeAtivo)
+        {
+            var collection = _database.GetCollection<Pregao>("PregaoCollection");
+
+            var filtro = Builders<Pregao>.Filter.Eq(x => x.Ativo, NomeAtivo);
+            var ordenacao = Builders<Pregao>.Sort.Descending(x => x.Data);
+            var limit = 30;
+
+            return collection.Find(filtro).Sort(ordenacao).Limit(limit).ToList();
         }
     }
 }

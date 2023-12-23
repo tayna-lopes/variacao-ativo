@@ -5,8 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using variacao_ativo.Models.Context;
-using variacao_ativo.Repositories;
-using variacao_ativo.Repositories.Interface;
 using variacao_ativo.Services;
 using variacao_ativo.Services.Interface;
 
@@ -27,9 +25,6 @@ namespace variacao_ativo
 
             //Service
             services.AddScoped<IFinanceApiService, FinanceApiService>();
-
-            //Repository
-            services.AddScoped<IMongoDbRepository, MongoDbRepository>();
 
             //Appconfig
             services.AddSingleton<IConfiguration>(Configuration);
