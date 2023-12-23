@@ -5,6 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using variacao_ativo.Models.Context;
+using variacao_ativo.Repositories;
+using variacao_ativo.Repositories.Interface;
+using variacao_ativo.Services;
+using variacao_ativo.Services.Interface;
 
 namespace variacao_ativo
 {
@@ -20,6 +24,16 @@ namespace variacao_ativo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            //Service
+            services.AddScoped<IFinanceApiService, FinanceApiService>();
+
+            //Repository
+            services.AddScoped<IMongoDbRepository, MongoDbRepository>();
+
+            //Appconfig
+            services.AddSingleton<IConfiguration>(Configuration);
+
 
             // Configuração do Swagger
             services.AddSwaggerGen(c =>

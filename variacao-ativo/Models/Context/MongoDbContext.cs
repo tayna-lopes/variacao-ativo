@@ -29,13 +29,13 @@ namespace variacao_ativo.Models.Context
             }
         }
 
-        //public IMongoCollection<Nota> Notas
-        //{
-        //    get
-        //    {
-        //        return _database.GetCollection<Nota>("Notas");
-        //    }
-        //}
+        public IMongoCollection<Pregao> PregaoCollection
+        {
+            get
+            {
+                return _database.GetCollection<Pregao>("PregaoCollection");
+            }
+        }
     }
 }
 
