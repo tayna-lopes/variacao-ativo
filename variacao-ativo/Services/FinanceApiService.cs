@@ -30,7 +30,7 @@ namespace variacao_ativo.Services
 
         private async Task<List<Pregao>> AtualizarBanco(string NomeAtivo)
         {
-            MongoDbContext dbContext = new MongoDbContext();
+            MongoDbContext dbContext = new();
 
             using HttpClient client = new HttpClient();
             string url = _configuration["Finance:chartUrl"] + NomeAtivo;

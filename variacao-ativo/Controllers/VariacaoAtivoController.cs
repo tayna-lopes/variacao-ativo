@@ -21,7 +21,7 @@ public class VariacaoAtivoController : ControllerBase
     [HttpGet]
     [Route("ObterVariacaoAtivos")]
 
-    public async Task<ActionResult<List<VariacaoDoAtivoViewModel>>> ObterChart(string NomeAtivo)
+    public async Task<IActionResult> ObterChart(string NomeAtivo)
     {
         try
         {
@@ -29,7 +29,8 @@ public class VariacaoAtivoController : ControllerBase
             {
                 return BadRequest();
             }
-            return await _financeApiService.ObterVariacaoAtivos(NomeAtivo);
+            List<VariacaoDoAtivoViewModel> list = await _financeApiService.ObterVariacaoAtivos(NomeAtivo);
+            return Ok(list);
 
         }catch (Exception ex)
         {

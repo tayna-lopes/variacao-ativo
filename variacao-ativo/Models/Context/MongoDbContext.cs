@@ -1,6 +1,7 @@
 ﻿using System;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.Core.Configuration;
 
 namespace variacao_ativo.Models.Context
 {
@@ -12,6 +13,24 @@ namespace variacao_ativo.Models.Context
 
         private IMongoDatabase _database { get; }
 
+        public MongoDbContext(string connectionString, string databaseName, bool isSSL)
+        {
+            try
+            {
+                MongoClientSettings settings = MongoClientSettings.FromUrl(new MongoUrl(connectionString));
+                if (isSSL)
+                {
+                    settings.SslSettings = new SslSettings { EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12 };
+                }
+                var mongoClient = new MongoClient(settings);
+                _database = mongoClient.GetDatabase(databaseName);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Não foi possível se conectar com o servidor.", ex);
+            }
+        }
         public MongoDbContext()
         {
             try
@@ -71,6 +90,16 @@ namespace variacao_ativo.Models.Context
             var limit = 30;
 
             return collection.Find(filtro).Sort(ordenacao).Limit(limit).ToList();
+        }
+        public Pregao BuscarAtivo(string NomeAtivo, long Timestamp)
+        {
+            var collection = _database.GetCollection<Pregao>("PregaoCollection");
+
+            var filter = Builders<Pregao>.Filter.And(
+                        Builders<Pregao>.Filter.Eq(x => x.Data, Timestamp),
+                        Builders<Pregao>.Filter.Eq(x => x.Ativo, NomeAtivo));
+
+            return collection.Find(filter).First();
         }
     }
 }
