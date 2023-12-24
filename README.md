@@ -17,15 +17,28 @@ Este desafio consiste em consultar a variação do preço de um ativo a sua esco
   <ul>
   <li>ASP .NET CORE 7</li>
   <li>MongoDB</li>
+  <li>MongoDB CompassC</li>
 </ul>
 </p>
 
 <p>
 <h4 align="left"> :open_book:	Instruções</h4>
+MONGODB
 <ol>
-  <li>No MongoDb Compass</li>
+  <li>No MongoDb Compass logar com a string de conexão local (geralmente mongodb://localhost:27017)</li>
+  <li>Após conectar clicar no icone de :heavy_plus_sign: para criar uma nova base de dados</li>
+  <img src="https://github.com/tayna-lopes/variacao-ativo/assets/61235532/95d75b6e-eef3-49af-aaad-f3e6ce9547bc">
+  <li>Criar a base de dados com o nome VariacaoAtivo</li>
+  <li>Criar a coleçãos com o nome PregaoCollection</li>
+  <img src="https://github.com/tayna-lopes/variacao-ativo/assets/61235532/fd4a7265-c815-4d4b-9ad8-ad22848974e2">
+  <li>Clicar em "CREATE DATABASE"</li>
+</ol>
+
+VISUAL STUDIO
+<ol>
   <li>Clonar o repositório no Visual Studio</li>
   <li>Limpar e Buildar a solução</li>
   <li>Executar a solução</li>
 </ol>
+
 </p>
